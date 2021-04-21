@@ -8,13 +8,23 @@
     <name>mymall</name>
     <description>mymall-聚合服务</description>
     <packaging>pom</packaging>
-
+    <properties>
+        <!-- Environment Settings -->
+        <java.version>1.8</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
     <modules>
         <module>mymall-coupon</module>
         <module>mymall-member</module>
         <module>mymall-order</module>
         <module>mymall-product</module>
         <module>mymall-ware</module>
+        <module>renren-fast</module>
+        <module>renren-generator</module>
+        <module>mymall-common</module>
     </modules>
 
 </project>
