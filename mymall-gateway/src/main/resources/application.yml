@@ -49,12 +49,17 @@ spring:
         - id: mymall_host_route
           uri: lb://mymall-product
           predicates:
-            - Host=mymall.com
+            - Host=mymall.com,item.mymall.com
 
         - id: mymall_search_route
           uri: lb://mymall-search
           predicates:
             - Host=search.mymall.com
+
+        - id: mymall_auth_route
+          uri: lb://mymall-auth-server
+          predicates:
+            - Host=auth.mymall.com
 
 
 # 前端项目：/api
