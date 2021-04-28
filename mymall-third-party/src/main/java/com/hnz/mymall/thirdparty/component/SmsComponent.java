@@ -22,8 +22,8 @@ public class SmsComponent {
 
     private String host;
     private String path;
-    private String skin;
-    private String sign;
+    private String templateId;
+    private String smsSignId;
     private String appcode;
 
     public void sendCode(String phone, String code) {
@@ -33,10 +33,11 @@ public class SmsComponent {
         headers.put("Authorization", "APPCODE " + appcode);
         Map<String, String> querys = new HashMap<String, String>();
         //"**code**:12345,**minute**:5"
-        querys.put("param", code);
+        querys.put("param", "**code**:" + code + ",**minute**:5");
         querys.put("mobile", phone);
-        querys.put("templateId", skin);
-        querys.put("smsSignId", sign);
+        querys.put("templateId", templateId);
+        querys.put("smsSignId", smsSignId);
+        Map<String, String> bodys = new HashMap<String, String>();
         //JDK 1.8示例代码请在这里下载：  http://code.fegine.com/Tools.zip
         try {
             /**
@@ -52,11 +53,12 @@ public class SmsComponent {
              * 相关jar包（非pom）直接下载：
              * http://code.fegine.com/aliyun-jar.zip
              */
-            HttpResponse response = HttpUtils.doGet(host, path, method, headers, querys);
+            // HttpResponse response = HttpUtils.doPost(host, path, method, headers, querys, bodys);
             //System.out.println(response.toString());如不输出json, 请打开这行代码，打印调试头部状态码。
-            //状态码: 200 正常；400 URL无效；401 appCode错误； 403 次数用完； 500 API网管错误
+            //状态码: 200 正常；400 URL无效；401 appCode错误； 403 次数用完； 500 API网关错误
             //获取response的body
-            System.out.println(EntityUtils.toString(response.getEntity()));
+            // System.out.println(response.toString());
+            // System.out.println(EntityUtils.toString(response.getEntity()));
         } catch (Exception e) {
             e.printStackTrace();
         }

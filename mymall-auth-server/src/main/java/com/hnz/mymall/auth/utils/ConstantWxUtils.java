@@ -14,13 +14,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class ConstantWxUtils implements InitializingBean {
 
-    @Value("${wx.open.app_id}")
+    // @Value("${wx.open.app_id}")
     private String appId;
 
-    @Value("${wx.open.app_secret}")
+    // @Value("${wx.open.app_secret}")
     private String appSecret;
 
-    @Value("${wx.open.redirect_url}")
+    // @Value("${wx.open.redirect_url}")
     private String redirectUrl;
 
     public static String WX_OPEN_APP_ID;

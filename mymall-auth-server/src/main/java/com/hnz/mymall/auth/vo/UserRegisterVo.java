@@ -25,7 +25,7 @@ public class UserRegisterVo {
     private String password;
 
     @NotEmpty(message = "手机号不能为空")
-    @Pattern(regexp = "^[1]([3-9])[0-9]{9}$", message = "手机号格式不正确")
+    @Pattern(regexp = "^((13[0-9])|(14[5-9])|(15([0-3]|[5-9]))|(16[6-7])|(17[1-8])|(18[0-9])|(19[1|3])|(19[5|6])|(19[8|9]))\\d{8}$", message = "手机号格式不正确")
     private String phone;
 
     @NotEmpty(message = "验证码不能为空")
