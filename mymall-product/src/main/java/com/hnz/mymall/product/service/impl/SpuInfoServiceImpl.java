@@ -129,7 +129,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         attrValueService.saveProductAttr(collect);
 
 
-        //5、保存spu的积分信息；gulimall_sms->sms_spu_bounds
+        //5、保存spu的积分信息；mymall_sms->sms_spu_bounds
         Bounds bounds = vo.getBounds();
         SpuBoundTo spuBoundTo = new SpuBoundTo();
         BeanUtils.copyProperties(bounds, spuBoundTo);
@@ -193,7 +193,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
                 //5.3）、sku的销售属性信息：pms_sku_sale_attr_value
                 skuSaleAttrValueService.saveBatch(skuSaleAttrValueEntities);
 
-                // //5.4）、sku的优惠、满减等信息；gulimall_sms->sms_sku_ladder\sms_sku_full_reduction\sms_member_price
+                // //5.4）、sku的优惠、满减等信息；mymall_sms->sms_sku_ladder\sms_sku_full_reduction\sms_member_price
                 SkuReductionTo skuReductionTo = new SkuReductionTo();
                 BeanUtils.copyProperties(item, skuReductionTo);
                 skuReductionTo.setSkuId(skuId);
@@ -256,7 +256,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
      * 整个业务逻辑就是围绕着封装SkuEsModel，并将它保存到ES中进行展开
      * 主要注意点是：
      * （1）Attrs中的所有属性都是可以检索的
-     * （2）判断库存充足，需要借助于gulimall-ware来完成，通过openfeign远程调用对应方法
+     * （2）判断库存充足，需要借助于mymall-ware来完成，通过openfeign远程调用对应方法
      * （3）将封装结果保存到ES中，即便存在重复调用的情况，也不会造成数据的重复插入，
      * 因为ES会比较插入文档的ID，相同则执行的是更新操作
      *

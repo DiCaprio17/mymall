@@ -57,7 +57,7 @@ public class MallSearchServiceImpl implements MallSearchService {
     //去es中进行检索
     @Override
     public SearchReult search(SearchParam param) {
-        //动态构建出查询需要的dsl（dsk参考doc/json/gulimall_product_dsl.json）
+        //动态构建出查询需要的dsl（dsk参考doc/json/mymall_product_dsl.json）
         SearchReult result = null;
         //1. 创建检索请求
         SearchRequest searchRequest = buildSearchRequest(param);

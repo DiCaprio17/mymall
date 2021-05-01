@@ -124,7 +124,7 @@ public class WxApiController {
                 baseUrl,
                 ConstantWxUtils.WX_OPEN_APP_ID,
                 redirect_url,
-                "xunqi"
+                "hnz"
         );
 
         //重定向到请求微信地址

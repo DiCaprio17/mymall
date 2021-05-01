@@ -61,6 +61,25 @@ spring:
           predicates:
             - Host=auth.mymall.com
 
+        - id: mymall_cart_route
+          uri: lb://mymall-cart
+          predicates:
+            - Host=cart.mymall.com
+
+        - id: mymall_order_route
+          uri: lb://mymall-order
+          predicates:
+            - Host=order.mymall.com
+
+        - id: mymall_member_route
+          uri: lb://mymall-member
+          predicates:
+            - Host=member.mymall.com
+
+        - id: mymall_seckill_route
+          uri: lb://mymall-seckill
+          predicates:
+            - Host=seckill.mymall.com
 
 # 前端项目：/api
 ## http://localhost:88/api/captcha.jpg   http://localhost:8080/renren-fast/captcha.jpg
