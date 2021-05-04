@@ -56,6 +56,18 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.lettuce</groupId>
+                    <artifactId>lettuce-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!--因为lettuce有bug，所以使用jedis-->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
         </dependency>
 
         <!-- 整合springsession -->
@@ -76,22 +88,22 @@
             <optional>true</optional>
         </dependency>
 
-        <!--<dependency>-->
-        <!--    <groupId>com.alibaba.cloud</groupId>-->
-        <!--    <artifactId>spring-cloud-starter-alibaba-seata</artifactId>-->
-        <!--    <exclusions>-->
-        <!--        <exclusion>-->
-        <!--            <groupId>io.seata</groupId>-->
-        <!--            <artifactId>seata-all</artifactId>-->
-        <!--        </exclusion>-->
-        <!--    </exclusions>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
+            <!--<exclusions>-->
+            <!--    <exclusion>-->
+            <!--        <groupId>io.seata</groupId>-->
+            <!--        <artifactId>seata-all</artifactId>-->
+            <!--    </exclusion>-->
+            <!--</exclusions>-->
+        </dependency>
 
-        <!--<dependency>-->
-        <!--    <groupId>io.seata</groupId>-->
-        <!--    <artifactId>seata-all</artifactId>-->
-        <!--    <version>0.9.0</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>io.seata</groupId>
+            <artifactId>seata-all</artifactId>
+            <version>0.9.0</version>
+        </dependency>
 
         <!--&lt;!&ndash; 支付宝sdk &ndash;&gt;-->
         <!--&lt;!&ndash; https://mvnrepository.com/artifact/com.alipay.sdk/alipay-sdk-java &ndash;&gt;-->

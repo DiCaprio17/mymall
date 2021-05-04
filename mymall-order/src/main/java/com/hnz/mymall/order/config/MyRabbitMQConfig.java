@@ -1,9 +1,7 @@
 package com.hnz.mymall.order.config;
 
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.Exchange;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,7 +10,6 @@ import java.util.HashMap;
 
 /**
  * @Description:
- *
  * @createTime: 2020-07-06 18:39
  **/
 
@@ -21,11 +18,21 @@ public class MyRabbitMQConfig {
 
     /* 容器中的Queue、Exchange、Binding 会自动创建（在RabbitMQ）不存在的情况下 */
 
+    //一旦第一次创建成功，后面修改代码也不会重新创建，必须去rabbitmq中删除后才能重新创建
+    //第一次创建不成功是因为没有监听
+
+    @RabbitListener(queues = "order.delay.queue")
+    public void handle(Message message) {
+
+    }
+
+
     /**
      * 死信队列
      *
      * @return
-     */@Bean
+     */
+    @Bean
     public Queue orderDelayQueue() {
         /*
             Queue(String name,  队列名字
@@ -102,6 +109,7 @@ public class MyRabbitMQConfig {
 
     /**
      * 订单释放直接和库存释放进行绑定
+     *
      * @return
      */
     @Bean
@@ -117,6 +125,7 @@ public class MyRabbitMQConfig {
 
     /**
      * 商品秒杀队列
+     *
      * @return
      */
     @Bean

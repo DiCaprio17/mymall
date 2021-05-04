@@ -176,6 +176,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 
     /**
      * 提交订单
+     * 不适合使用@GlobalTransactional，seata分布式事务，因为这里存在高并发业务，使用seata会加很多锁，是原来的并发变成串行化，会导致效率变低
      * @param vo
      * @return
      */
@@ -239,7 +240,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 
                 //TODO 调用远程锁定库存的方法
                 //出现的问题：扣减库存成功了，但是由于网络原因超时，出现异常，导致订单事务回滚，库存事务不回滚(解决方案：seata)
-                //为了保证高并发，不推荐使用seata，因为是加锁，并行化，提升不了效率,可以发消息给库存服务
+                //为了保证高并发，不推荐使用seata，因为是加锁，并行化，提升不了效率,可以通知服务自己回滚，即发消息给库存服务
+                //库存服务本身也可以使用自动解锁模式，消息队列
                 R r = wmsFeignService.orderLockStock(lockVo);
                 if (r.getCode() == 0) {
                     //锁定成功

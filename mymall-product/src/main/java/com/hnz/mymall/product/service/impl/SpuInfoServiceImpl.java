@@ -86,7 +86,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 
     /**
      * TODO 高级部分完善
-     *
+     * @GlobalTransactional 此处适合使用seata AT分布式事务
      * @param vo
      */
     @Transactional

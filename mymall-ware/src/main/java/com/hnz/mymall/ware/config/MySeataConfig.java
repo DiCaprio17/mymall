@@ -1,4 +1,4 @@
-package com.hnz.mymall.order.config;
+package com.hnz.mymall.ware.config;
 
 import com.zaxxer.hikari.HikariDataSource;
 import io.seata.rm.datasource.DataSourceProxy;
@@ -10,20 +10,23 @@ import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
 
-
 /**
  * @Description:
  *
- * @createTime: 2020-07-06 11:57
+ * @createTime: 2020-07-06 15:35
  **/
-
 @Configuration
 public class MySeataConfig {
 
     @Autowired
     DataSourceProperties dataSourceProperties;
 
-
+    /**
+     * 需要将 DataSourceProxy 设置为主数据源，否则事务无法回滚
+     *
+     * @param dataSourceProperties
+     * @return
+     */
     @Bean
     public DataSource dataSource(DataSourceProperties dataSourceProperties) {
 
@@ -34,5 +37,4 @@ public class MySeataConfig {
 
         return new DataSourceProxy(dataSource);
     }
-
 }
