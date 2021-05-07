@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: mymall-cart
+
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848
+        namespace: 84fd1c71-2877-4cbc-ad8e-82198ead6e79
+
+

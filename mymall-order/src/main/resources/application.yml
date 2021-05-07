@@ -24,3 +24,7 @@ mybatis-plus:
 
 server:
   port: 9000
+
+logging:
+  level:
+    com.hnz.mymall: debug

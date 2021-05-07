@@ -31,6 +31,7 @@ import com.hnz.mymall.order.service.PaymentInfoService;
 import com.hnz.mymall.order.to.OrderCreateTo;
 import com.hnz.mymall.order.to.SpuInfoVo;
 import com.hnz.mymall.order.vo.*;
+import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
