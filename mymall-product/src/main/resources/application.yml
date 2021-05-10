@@ -10,7 +10,7 @@ spring:
         server-addr: 127.0.0.1:8848
     alicloud:
       access-key:
-      secret-key: MboRrDW02oHzGgcwVL9eFbyancvRcZ
+      secret-key:
       oss:
         endpoint: http://oss-cn-shenzhen.aliyuncs.com
   jackson:
@@ -34,3 +34,10 @@ server:
 logging:
   level:
     com.hnz.mymall: debug
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: basic
