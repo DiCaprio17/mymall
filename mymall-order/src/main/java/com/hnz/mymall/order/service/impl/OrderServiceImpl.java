@@ -5,8 +5,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-// import com.lly835.bestpay.model.PayResponse;
-// import com.lly835.bestpay.service.BestPayService;
+import com.lly835.bestpay.model.PayResponse;
+import com.lly835.bestpay.service.BestPayService;
 import com.hnz.common.exception.NoStockException;
 import com.hnz.common.to.OrderTo;
 import com.hnz.common.to.mq.SeckillOrderTo;
@@ -86,8 +86,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     @Autowired
     private PaymentInfoService paymentInfoService;
 
-    // @Autowired
-    // private BestPayService bestPayService;
+    @Autowired
+    private BestPayService bestPayService;
 
     @Autowired
     private ThreadPoolExecutor threadPoolExecutor;
@@ -714,6 +714,53 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         //保存订单项数据
         orderItemService.save(orderItem);
     }
+
+    /**
+     * 微信异步通知结果
+     * @param notifyData
+     * @return
+     */
+    @Override
+    public String asyncNotify(String notifyData) {
+
+        //签名效验
+        PayResponse payResponse = bestPayService.asyncNotify(notifyData);
+        log.info("payResponse={}",payResponse);
+
+        //2.金额效验（从数据库查订单）
+        OrderEntity orderEntity = this.getOrderByOrderSn(payResponse.getOrderId());
+
+        //如果查询出来的数据是null的话
+        //比较严重(正常情况下是不会发生的)发出告警：钉钉、短信
+        if (orderEntity == null) {
+            //TODO 发出告警，钉钉，短信
+            throw new RuntimeException("通过订单编号查询出来的结果是null");
+        }
+
+        //判断订单状态状态是否为已支付或者是已取消,如果不是订单状态不是已支付状态
+        Integer status = orderEntity.getStatus();
+        if (status.equals(OrderStatusEnum.PAYED.getCode()) || status.equals(OrderStatusEnum.CANCLED.getCode())) {
+            throw new RuntimeException("该订单已失效,orderNo=" + payResponse.getOrderId());
+        }
+
+        /*//判断金额是否一致,Double类型比较大小，精度问题不好控制
+        if (orderEntity.getPayAmount().compareTo(BigDecimal.valueOf(payResponse.getOrderAmount())) != 0) {
+            //TODO 告警
+            throw new RuntimeException("异步通知中的金额和数据库里的不一致,orderNo=" + payResponse.getOrderId());
+        }*/
+
+        //3.修改订单支付状态
+        //支付成功状态
+        String orderSn = orderEntity.getOrderSn();
+        this.updateOrderStatus(orderSn,OrderStatusEnum.PAYED.getCode(),PayConstant.WXPAY);
+
+        //4.告诉微信不要再重复通知了
+        return "<xml>\n" +
+                "  <return_code><![CDATA[SUCCESS]]></return_code>\n" +
+                "  <return_msg><![CDATA[OK]]></return_msg>\n" +
+                "</xml>";
+    }
+
 
 
     public static void main(String[] args) {
