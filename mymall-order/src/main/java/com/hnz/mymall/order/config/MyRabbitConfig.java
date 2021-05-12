@@ -18,6 +18,7 @@ public class MyRabbitConfig {
 
     private RabbitTemplate rabbitTemplate;
 
+    // 出现循环依赖问题，因此自己创建RabbitTemplate
     @Primary
     @Bean
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {

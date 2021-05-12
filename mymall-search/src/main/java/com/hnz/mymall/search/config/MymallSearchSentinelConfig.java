@@ -1,4 +1,4 @@
-package com.hnz.mymall.seckill.config;
+package com.hnz.mymall.search.config;
 
 import com.alibaba.csp.sentinel.adapter.servlet.callback.UrlBlockHandler;
 import com.alibaba.csp.sentinel.adapter.servlet.callback.WebCallbackManager;
@@ -13,15 +13,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @Description: 自定义阻塞返回方法，想返回R对象
+ * @Description: 自定义阻塞返回方法
  *
  * @createTime: 2020-07-13 11:30
  **/
 
 @Configuration
-public class MymallSeckillSentinelConfig {
+public class MymallSearchSentinelConfig {
 
-    public MymallSeckillSentinelConfig() {
+    public MymallSearchSentinelConfig() {
 
         WebCallbackManager.setUrlBlockHandler(new UrlBlockHandler() {
             @Override
